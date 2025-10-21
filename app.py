@@ -30,9 +30,9 @@ def get_jwt_token_sync(region):
         "US": "https://tokenalljwt.onrender.com/api/oauth_guest?uid=3787481313&password=JlOivPeosauV0l9SG6gwK39lH3x2kJkO",
         "SAC": "https://tokenalljwt.onrender.com/api/oauth_guest?uid=3787481313&password=JlOivPeosauV0l9SG6gwK39lH3x2kJkO",
         "NA": "https://tokenalljwt.onrender.com/api/oauth_guest?uid=3787481313&password=JlOivPeosauV0l9SG6gwK39lH3x2kJkO",
-        "default": "https://projects-fox-x-get-jwt.vercel.app/get?uid=3902790517&password=F4C9B99E79BC5594A182ADF9267EDB83BC7FF4014D35ED9A0866263849032057"
+        "ID": "https://projects-fox-x-get-jwt.vercel.app/get?uid=3902790517&password=F4C9B99E79BC5594A182ADF9267EDB83BC7FF4014D35ED9A0866263849032057"
     }    
-    url = endpoints.get(region, endpoints["default"])
+    url = endpoints.get(region, endpoints["ID"])
     with jwt_lock:
         try:
             response = requests.get(url, timeout=10)
@@ -67,9 +67,9 @@ def get_api_endpoint(region):
         "US": "https://client.us.freefiremobile.com/GetPlayerPersonalShow",
         "SAC": "https://client.us.freefiremobile.com/GetPlayerPersonalShow",
         "NA": "https://client.us.freefiremobile.com/GetPlayerPersonalShow",
-        "default": "https://clientbp.ggblueshark.com/GetPlayerPersonalShow"
+        "ID": "https://clientbp.ggblueshark.com/GetPlayerPersonalShow"
     }
-    return endpoints.get(region, endpoints["default"])
+    return endpoints.get(region, endpoints["ID"])
 key = "Yg&tc%DEuh6%Zc^8"
 iv = "6oyZDr22E3ychjM%"
 def encrypt_aes(hex_data, key, iv):
@@ -112,7 +112,7 @@ def apis(idd, region):
 def get_player_info():
     try:
         uid = request.args.get('uid')
-        region = request.args.get('region', 'default').upper()
+        region = request.args.get('region', 'ID').upper()
         custom_key = request.args.get('key', key)
         custom_iv = request.args.get('iv', iv)
         if not uid:
@@ -141,5 +141,5 @@ def get_player_info():
 def favicon():
     return '', 404
 if __name__ == "__main__":
-    ensure_jwt_token_sync("default")
+    ensure_jwt_token_sync("ID")
     app.run(host="0.0.0.0", port=5552)
